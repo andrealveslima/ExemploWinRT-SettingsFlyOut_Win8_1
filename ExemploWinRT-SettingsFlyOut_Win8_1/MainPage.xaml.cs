@@ -25,6 +25,15 @@ namespace ExemploWinRT_SettingsFlyOut_Win8_1
         public MainPage()
         {
             this.InitializeComponent();
+            Windows.UI.ApplicationSettings.SettingsPane.GetForCurrentView().CommandsRequested += Settings_CommandsRequested;
+        }
+
+        public void Settings_CommandsRequested(Windows.UI.ApplicationSettings.SettingsPane sender, Windows.UI.ApplicationSettings.SettingsPaneCommandsRequestedEventArgs args)
+        {
+            args.Request.ApplicationCommands.Clear();
+
+            Windows.UI.ApplicationSettings.SettingsCommand command = new Windows.UI.ApplicationSettings.SettingsCommand("AboutPage", "About", (commandHandler) => new AboutFlyout().Show());
+            args.Request.ApplicationCommands.Add(command);
         }
     }
 }
